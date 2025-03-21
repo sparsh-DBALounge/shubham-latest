@@ -18,7 +18,9 @@ const SignIn = () => {
                     <img src={icons.BRAND_LOGO} alt="Logo" />
 
                     <div>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email" style={{ marginBottom: '5px' }}>
+                            Email <span style={{ color: 'red' }}>*</span>
+                        </label>
                         <input
                             type="email"
                             id="email"
@@ -32,7 +34,9 @@ const SignIn = () => {
                     </div>
 
                     <div className="mt-2">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password" style={{ marginBottom: '5px' }}>
+                            Password <span style={{ color: 'red' }}>*</span>
+                        </label>
                         <input
                             type="password"
                             id="password"
