@@ -13,10 +13,8 @@ const Table = ({ header = [], alignRightHeader = [], children, className = "" })
 
                 <tbody>
                     {children}
-
                 </tbody>
             </table>
-
         </div>
     )
 }

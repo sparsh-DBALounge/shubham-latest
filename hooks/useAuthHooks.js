@@ -6,6 +6,7 @@ import useValidationHooks from "./useValidationHooks";
 import errorHandler from "@/utils/handler.utils";
 import pageRoutes from "@/utils/pageRoutes";
 import { useRouter } from "next/navigation";
+import { setUser } from "@/redux/slice/authSlice";
 const crypto = require('crypto');
 
 const authIninitalBody = {
@@ -131,7 +132,6 @@ const useAuthHooks = () => {
     }
 
     const logoutHandler = async () => {
-        console.log(API.deleteCookie)
         dispatch(setUser({ email: "", name: "" }));
         await axios.get(API.deleteCookie());
         router.push(pageRoutes.SIGN_IN_PAGE())
