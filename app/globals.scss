@@ -4,7 +4,7 @@ $text-color: #454545;
 :root {
   --primary-blue: #015495;
   --primary-yellow: #f58224;
-  --secondary-yellow: #f58224d9;
+  --secondary-yellow: #f58224b1;
 }
 
 html,
@@ -314,5 +314,55 @@ label span::after {
 
   .form-control {
     margin-bottom: 1rem;
+  }
+}
+
+// //////////////////////////// MY CSS
+// DASHBOARD PAGE
+.dashboard-btns {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
+  .dashboard-btn {
+    width: 150px;
+    padding: 12px;
+    background-color: var(--primary-yellow);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+}
+
+// USERS PAGE
+
+.users-container {
+  .sub-heading-container {
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-weight: bold;
+      color: $text-color;
+    }
+  }
+
+  .add-user-btn {
+    width: 150px;
+    padding: 10px;
+    background-color: var(--primary-yellow);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+
+  .users-table {
+    margin-top: 10px;
   }
 }
