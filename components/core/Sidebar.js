@@ -1,10 +1,8 @@
 'use client'
 
-import { icons } from "@/env/icons"
-import useAuthHooks from "@/hooks/useAuthHooks"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
+import Logout from "./Logout"
 const links = [
     {
         href: '/',
@@ -16,8 +14,8 @@ const links = [
     }
 ]
 
-export const SideBar = () => {
-    const { logoutHandler } = useAuthHooks()
+ export const  SideBar = (props) => {
+    // const { logoutHandler } = useAuthHooks()
     const pathName = usePathname()
 
     return (
@@ -31,10 +29,7 @@ export const SideBar = () => {
                     </Link>
                 ))}
             </div>
-            <button onClick={logoutHandler} className="logout-btn">
-                <img src={icons.LOGOUT} alt="logout" width={20} height={20} />
-                Logout
-            </button>
+            <Logout />
         </div>
     )
 }

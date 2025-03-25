@@ -1,4 +1,7 @@
-import Table from "@/components/core/Table"
+"use client"
+import React from "react";
+import Table from "@/components/core/Table";
+import Drawer from "@/hoc/drawerHOC";
 
 const users = [
     {
@@ -16,21 +19,27 @@ const users = [
         email: "nainish@gmail.com",
         role: "admin",
     }
+];
 
-]
-
-export default function Home() {
+function Home({ openDrawer }) {
     return (
         <div className="users-container">
             <h3>Users Page</h3>
             <div className="sub-heading-container">
                 <p>Manage all users</p>
-                <button className="add-user-btn">Add User</button>
+                <button 
+                    className="add-user-btn" 
+                    onClick={() => openDrawer({ component: "ADD_USER", title: "Add User" })}
+                >
+                    Add User
+                </button>
             </div>
 
             <div className="users-table">
-                <Table header={['S.No', 'Name', 'Email', 'Role']} />
+                <Table header={['S.No', 'Employee Code', 'Email', 'Role', 'Created By']} />
             </div>
         </div>
-    )
+    );
 }
+
+export default Drawer(Home); 
