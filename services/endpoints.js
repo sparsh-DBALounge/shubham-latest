@@ -3,7 +3,7 @@ const API = {
 
     deleteCookie: () => ``,
 
-    addUser: () => ``
+    User: () => ``
 }
 
 export default API

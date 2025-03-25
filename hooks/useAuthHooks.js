@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
 import axios from "@/services/axios";
 import API from "@/services/endpoints";
 import useValidationHooks from "./useValidationHooks";
 import errorHandler from "@/utils/handler.utils";
 import pageRoutes from "@/utils/pageRoutes";
 import { useRouter } from "next/navigation";
-import { setUser } from "@/redux/slice/authSlice";
+import useActionDispatch from "@/hooks/useActionDispatch";
 const crypto = require('crypto');
 
 const authIninitalBody = {
@@ -16,11 +15,11 @@ const authIninitalBody = {
 }
 
 const addUserIninitalBody = {
-    error: "",
-    name: "",
-    lastName: "",
     email: "",
     password: "",
+    createdBy: "",
+    role: "",
+    employee_code:null
 }
 
 const errorMessage = {
@@ -30,7 +29,7 @@ const errorMessage = {
 
 const useAuthHooks = () => {
 
-    const dispatch = useDispatch();
+    const { setUser } = useActionDispatch();
     const router = useRouter()
 
     const { isEmailValid } = useValidationHooks()
@@ -93,10 +92,10 @@ const useAuthHooks = () => {
                 return
             }
 
-            dispatch(setUser({
+           setUser({
                 email: data.email,
                 name: data.name,
-            }));
+            });
 
             router.push("/");
         } catch (error) {
@@ -104,6 +103,17 @@ const useAuthHooks = () => {
         }
     }
 
+
+    const fetchUsers = async () =>{
+        try{
+            const data = await axios.get(API.User())
+            setUser(data)
+          
+        }
+        catch(error){
+         console.error(error)
+        }
+    }
     const addUserSubmitHandler = async (e) => {
         try {
             e.preventDefault()
@@ -115,7 +125,7 @@ const useAuthHooks = () => {
             body.email = addUserBody.email
             body.password = AES256Encryptor(addUserBody.password)
 
-            const { data } = await axios.post(API.addUser.post(), body)
+            const { data } = await axios.post(API.User.post(), body)
 
             if (data.code == "1111") {
                 setAdduserBody(state => ({ ...state, error: data.msg || "" }))
@@ -132,7 +142,7 @@ const useAuthHooks = () => {
     }
 
     const logoutHandler = async () => {
-        dispatch(setUser({ email: "", name: "" }));
+       setUser({ email: "", name: "" });
         await axios.get(API.deleteCookie());
         router.push(pageRoutes.SIGN_IN_PAGE())
     }
