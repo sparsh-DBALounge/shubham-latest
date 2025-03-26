@@ -29,7 +29,7 @@ const SelectWithLabel = (props) => {
                     className="form-control custom-select-style"
                     disabled={isReadOnly}
                     filter
-                // required={true}
+                    required={isRequired}
                 />
             </div>
         </div>

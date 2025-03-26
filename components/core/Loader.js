@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 
 const Loader = () => {
 
-    const { loader } = useSelector((state) => state.loaderSlice)
+    const { loader } = useSelector((state) => state.loader)
 
     useEffect(() => {
         if (loader) {

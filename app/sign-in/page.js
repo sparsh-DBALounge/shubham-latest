@@ -23,10 +23,10 @@ const SignIn = () => {
                         </label>
                         <input
                             type="email"
-                            id="email"
-                            name="email"
+                            id="emailId"
+                            name="emailId"
                             className="form-control"
-                            value={authBody.email}
+                            value={authBody.emailId}
                             onChange={changeHandler}
                             autoComplete="true"
                             required

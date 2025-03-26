@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
 import LogoutModel from '@/components/model/LogoutModel'
+import FileUploadModel from '@/components/model/FileUploadModal'
 
 const initialState = {
     show: false,
@@ -13,18 +14,19 @@ const initialState = {
 
 const ModelMap = {
     LOGOUT: LogoutModel,
+    UPLOADFILE: FileUploadModel
 }
 
 const ModelHOC = (Component) => {
     return function ModelComponent(props) {
         const [ModelState, setModelState] = useState({ ...initialState })
-        
+
         const closeModel = () => setModelState({ ...initialState })
         const openModel = (e) => setModelState({ show: true, ...e })
-        
+
         const ModalContentComponent = ModelMap[ModelState.key]
         const { key, ...restModelState } = ModelState
-        
+
         return (
             <>
                 {ModelState.show && ModalContentComponent && (
@@ -39,7 +41,7 @@ const ModelHOC = (Component) => {
                         <ModalContentComponent
                             openModel={openModel}
                             closeModel={closeModel}
-                            modalKey={key} 
+                            modalKey={key}
                             {...restModelState}
                         />
                     </Modal>

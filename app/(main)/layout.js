@@ -1,6 +1,9 @@
-import { SideBar } from "@/components/core/Sidebar"
+'use client'
 
-export default function mainLayout({ children }) {
+import { SideBar } from "@/components/core/Sidebar"
+import withAuth from "@/hoc/withAuth"
+
+function mainLayout({ children }) {
     return <div style={{ display: 'flex' }}>
         <SideBar />
         <div style={{ flex: 1, padding: '20px' }}>
@@ -8,3 +11,5 @@ export default function mainLayout({ children }) {
         </div>
     </div>
 }
+
+export default withAuth(mainLayout)

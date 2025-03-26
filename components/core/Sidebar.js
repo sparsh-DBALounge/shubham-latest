@@ -14,8 +14,7 @@ const links = [
     }
 ]
 
- export const  SideBar = (props) => {
-    // const { logoutHandler } = useAuthHooks()
+export const SideBar = (props) => {
     const pathName = usePathname()
 
     return (

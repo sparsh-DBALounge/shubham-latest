@@ -5,14 +5,14 @@ import { optionsHandler } from '@/hooks/helper/selectOptionsHandlers';
 import useAuthHooks from '@/hooks/useAuthHooks';
 
 const AddUserDrawer = ({ closeDrawer }) => {
-    const {  addUserBody, addUserChangeHandler, addUserSubmitHandler } = useAuthHooks()
+    const { addUserBody, addUserChangeHandler, addUserSubmitHandler } = useAuthHooks()
     const roles = [
-        { label: 'Admin', value: 'admin' },
-        { label: 'User', value: 'user' },
+        { label: 'Admin', value: 'ROLE_ADMIN' },
+        { label: 'User', value: 'ROLE_USER' },
     ];
 
     return (
-        <div>
+        <form onSubmit={addUserSubmitHandler}>
             <InputWithLabel
                 label='Email'
                 name='email'
@@ -20,9 +20,17 @@ const AddUserDrawer = ({ closeDrawer }) => {
                 isRequired={true}
                 onChangeHandler={addUserChangeHandler}
             />
-             <InputWithLabel
+            <InputWithLabel
                 label='Password'
-                name='Password'
+                name='password'
+                type='password'
+                state={addUserBody}
+                isRequired={true}
+                onChangeHandler={addUserChangeHandler}
+            />
+            <InputWithLabel
+                label='Employee Code'
+                name='empCode'
                 state={addUserBody}
                 isRequired={true}
                 onChangeHandler={addUserChangeHandler}
@@ -39,7 +47,7 @@ const AddUserDrawer = ({ closeDrawer }) => {
                 <button className="btn" onClick={closeDrawer}>Cancel</button>
                 <button className="btn btn-primary" onClick={() => addUserSubmitHandler(closeDrawer)}>Submit</button>
             </div>
-        </div>
+        </form>
     );
 };
 export default AddUserDrawer

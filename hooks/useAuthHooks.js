@@ -5,21 +5,25 @@ import useValidationHooks from "./useValidationHooks";
 import errorHandler from "@/utils/handler.utils";
 import pageRoutes from "@/utils/pageRoutes";
 import { useRouter } from "next/navigation";
-import useActionDispatch from "@/hooks/useActionDispatch";
+import { useActionDispatch } from "./useActionDispatch";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 const crypto = require('crypto');
 
 const authIninitalBody = {
-    email: "",
+    emailId: "",
     password: "",
     error: "",
 }
 
 const addUserIninitalBody = {
-    email: "",
+    emailId: "",
     password: "",
     createdBy: "",
-    role: "",
-    employee_code:null
+    userRoles: {
+        role: ""
+    },
+    empCode: null
 }
 
 const errorMessage = {
@@ -29,13 +33,15 @@ const errorMessage = {
 
 const useAuthHooks = () => {
 
+    const { user } = useSelector((state) => state.auth)
     const { setUser } = useActionDispatch();
     const router = useRouter()
 
     const { isEmailValid } = useValidationHooks()
 
     const [authBody, setAuthBody] = useState({ ...authIninitalBody })
-    const [addUserBody, setAdduserBody] = useState({ ...addUserIninitalBody })
+    const [addUserBody, setAddUserBody] = useState({ ...addUserIninitalBody })
+    const [allUsers, setAllUsers] = useState()
 
     const authBodyErrorHandler = (error) => {
         setAuthBody(state => ({ ...state, error: error }))
@@ -56,7 +62,7 @@ const useAuthHooks = () => {
         const { name, value } = e.target;
         const prevState = { ...addUserBody };
         prevState[name] = value;
-        setAdduserBody(prevState);
+        setAddUserBody(prevState);
     }
 
     const encryptionKey = process.env.ENCRYPTIONKEY
@@ -76,65 +82,48 @@ const useAuthHooks = () => {
     const signinSubmitHandler = async (e) => {
         try {
             e.preventDefault()
-            const body = {}
+            const { emailId, password } = authBody
 
-            if (!isEmailValid(authBody.email)) {
+            if (!isEmailValid(emailId)) {
                 authBodyErrorHandler(errorMessage.EMAIL_ERROR)
                 return
             }
-            body.email = authBody.email
-            body.password = AES256Encryptor(authBody.password)
 
-            const { data } = await axios.post(API.signIn.post(), body)
+            const { data } = await axios.post(API.signIn(), { emailId, password })
 
-            if (data.code == "1111") {
-                setAuthBody(state => ({ ...state, error: data.msg || "" }))
-                return
-            }
-
-           setUser({
-                email: data.email,
-                name: data.name,
-            });
-
+            setUser({ emailId: data.emailId });
             router.push("/");
         } catch (error) {
             errorHandler(error)
         }
     }
 
-
-    const fetchUsers = async () =>{
-        try{
-            const data = await axios.get(API.User())
-            setUser(data)
-          
-        }
-        catch(error){
-         console.error(error)
-        }
-    }
     const addUserSubmitHandler = async (e) => {
+        e.preventDefault()
         try {
-            e.preventDefault()
-            const body = {}
-            if (!isEmailValid(addUserBody.email)) {
+            const body = { ...addUserBody }
+            if (!isEmailValid(body.emailId)) {
                 addUserBodyErrorHandler(errorMessage.EMAIL_ERROR)
                 return
             }
-            body.email = addUserBody.email
-            body.password = AES256Encryptor(addUserBody.password)
 
-            const { data } = await axios.post(API.User.post(), body)
 
-            if (data.code == "1111") {
-                setAdduserBody(state => ({ ...state, error: data.msg || "" }))
-                return
-            } else {
-                setAdduserBody({ ...singUpIninitalBody })
-                alert("User Added successfully!")
-                router.push("/");
-            }
+            body.createdBy = user.emailId
+            console.log(body)
+            return
+            // body.password = AES256Encryptor(addUserBody.password)
+
+            const { data } = await axios.post(API.addUser(), body)
+
+            // if (data.code == "1111") {
+            //     setAddUserBody(state => ({ ...state, error: data.msg || "" }))
+            //     return
+            // } 
+
+
+            setAddUserBody({ ...singUpIninitalBody })
+            toast("User Added successfully!")
+            window.location.reload()
 
         } catch (error) {
             errorHandler(error)
@@ -142,13 +131,25 @@ const useAuthHooks = () => {
     }
 
     const logoutHandler = async () => {
-       setUser({ email: "", name: "" });
+        setUser({ emailId: "" });
         await axios.get(API.deleteCookie());
         router.push(pageRoutes.SIGN_IN_PAGE())
     }
 
+    const fetchUsers = async () => {
+        try {
+            const { data } = await axios.get(API.getAllUsers())
+            setAllUsers(data.userdata)
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
+
     return {
-        authBody, addUserBody, addUserChangeHandler, changeHandler, signinSubmitHandler, logoutHandler, addUserSubmitHandler
+        authBody, addUserBody, addUserChangeHandler, changeHandler, signinSubmitHandler, logoutHandler,
+        addUserSubmitHandler, fetchUsers, allUsers
     };
 };
 

@@ -1,11 +1,16 @@
-import { setUser } from "@/redux/slice/authSlice";
 import { useDispatch } from "react-redux";
+import { setUser, removeUser } from "@/redux/slice/authSlice";
+import { setDashboardData } from "@/redux/slice/dashboardSlice";
 
-const useActionDispatch = () =>{
-    const dispatch = useDispatch()
+export const useActionDispatch = () => {
+    const dispatch = useDispatch();
 
-    return({
-        setUser:(e) => dispatch(setUser(e))
+    return ({
+        setUser: (payload) => dispatch(setUser(payload)),
+        removeUser: (payload) => dispatch(removeUser()),
+
+        setDashboardData: (payload) => dispatch(setDashboardData(payload))
     })
+
 }
-export default useActionDispatch
+

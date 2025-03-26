@@ -1,9 +1,17 @@
 const API = {
-    signIn: () => ``,
+    signIn: () => `/deactivation-service/login`,
 
-    deleteCookie: () => ``,
+    addUser: () => `/admin/addUser`,
 
-    User: () => ``
+    dashboard: () => `/admin/dashboardCountDetail`,
+
+    deleteCookie: () => `/deactivation-service/delete-cookies`,
+
+    getAllUsers: () => `/admin/get-user-data`,
+
+    uploadFile: () => `/admin/upload`,
+
+    downloadFile: () => `/deactivation-service/invokeUserStatusReport`,
 }
 
 export default API

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '@/redux/store';
+import { store } from '@/redux/store';
 import { startLoaderAct, stopLoaderAct } from '@/redux/slice/loaderSlice';
 
 const request = axios.create({
