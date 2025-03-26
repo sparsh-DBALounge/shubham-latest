@@ -26,11 +26,11 @@ export default function Home() {
 
       <div className="dashbaord-cards__container">
         <div className="dashboard-card">
-          <p className="dashboard-card__title">Active Users</p>
+          <p className="dashboard-card__title">Total Users</p>
           <p className="dashboard-card__count">{dashboard.userDataCount}</p>
         </div>
         <div className="dashboard-card">
-          <p className="dashboard-card__title">User Status Count</p>
+          <p className="dashboard-card__title">Total Inactive Users</p>
           <p className="dashboard-card__count">{dashboard.userStatusCount}</p>
         </div>
 
