@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     env: {
-        BASE_URL: "",
+        BASE_URL: "http://localhost:8080",
         ENCRYPTIONKEY: "XIY9ZJ0BFpn3ajG0zZ6TG0vefTvkuJzF"
     }
 };

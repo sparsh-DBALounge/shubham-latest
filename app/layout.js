@@ -2,6 +2,7 @@ import "./globals.scss";
 import { Providers } from "@/redux/provider";
 import Loader from "@/components/core/Loader";
 import Footer from "@/components/core/Footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: 'Shubham Housing Finance',
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
       </head>
       <body>
+        <Toaster position="top-right" reverseOrder={false} />
         <Providers>
           <Loader />
           {children}

@@ -8,16 +8,17 @@ import { redirect } from "next/navigation";
 
 export default function withAuth(Component) {
     return function AuthenticatedComponent(props) {
-        const { user } = useSelector((state) => state.authSlice);
+
+        const { user } = useSelector((state) => state.auth);
 
         useEffect(() => {
-            if (typeof window !== "undefined" && !user?.email) {
+            if (typeof window !== "undefined" && !user?.emailId) {
                 redirect(pageRoutes.SIGN_IN_PAGE())
             }
-        }, [user.email]);
+        }, [user.emailId]);
 
-        if (user.email) {
-            return <Component {...props} />;
+        if (user.emailId) {
+            return <Component {...props}>{props.children}</Component>;
         }
         return null;
     };
